@@ -17,7 +17,7 @@ class SearchArticles {
 class SearchSources {
   final NewsRepository repository;
 
-  SearchSources({required this.repository});
+  SearchSources(Object object, {required this.repository});
 
   Future<Either<Failure, List<Source>>> call(String query) async {
     return await repository.searchSources(query);

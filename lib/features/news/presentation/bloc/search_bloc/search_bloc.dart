@@ -1,5 +1,4 @@
 import "package:bloc/bloc.dart";
-import "package:fpdart/fpdart.dart";
 import "package:test_news/features/news/domain/usecases/search_news.dart";
 import "search_event.dart";
 import "search_state.dart";

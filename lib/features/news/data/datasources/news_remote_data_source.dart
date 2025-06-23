@@ -1,4 +1,3 @@
-import "package:fpdart/fpdart.dart";
 import "package:test_news/core/constants/strings.dart";
 import "package:test_news/core/errors/exception.dart";
 import "../../../../core/network/api_client.dart";
@@ -40,7 +39,7 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
   @override
   Future<List<SourceModel>> getSourcesByCategory(String category) async {
     final result = await apiClient.get(
-      "/v2/top-headlines/sources",
+      "https://newsapi.org/v2/top-headlines/sources",
       queryParameters: {
         "category": category,
         "apiKey": apiKey,
@@ -62,7 +61,7 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
   @override
   Future<List<ArticleModel>> getArticlesBySource(String sourceId, int page) async {
     final result = await apiClient.get(
-      "/v2/top-headlines",
+      "https://newsapi.org/v2/top-headlines",
       queryParameters: {
         "sources": sourceId,
         "page": page,
@@ -86,7 +85,7 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
   @override
   Future<List<ArticleModel>> searchArticles(String query, int page) async {
     final result = await apiClient.get(
-      "/v2/everything",
+      "https://newsapi.org/v2/everything",
       queryParameters: {
         "q": query,
         "page": page,
@@ -110,7 +109,7 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
   @override
   Future<List<SourceModel>> searchSources(String query) async {
     final result = await apiClient.get(
-      "/v2/top-headlines/sources",
+      "https://newsapi.org/v2/top-headlines/sources",
       queryParameters: {
         "q": query,
         "apiKey": apiKey,
