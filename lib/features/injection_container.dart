@@ -17,14 +17,14 @@ import "package:test_news/features/news/presentation/bloc/category_bloc/category
 import "package:test_news/features/news/presentation/bloc/search_bloc/search_bloc.dart";
 import "package:test_news/features/news/presentation/bloc/source_bloc/source_bloc.dart";
 
-
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  // sl.registerLazySingleton();
 
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
-  // Blocs
+
   sl.registerFactory(
     () => CategoryBloc(getCategories: sl()),
   );
@@ -41,14 +41,14 @@ Future<void> init() async {
     ),
   );
 
-  // Use cases
   sl.registerLazySingleton(() => GetCategories(repository: sl()));
   sl.registerLazySingleton(() => GetSourcesByCategory(repository: sl()));
   sl.registerLazySingleton(() => GetArticlesBySource(repository: sl()));
   sl.registerLazySingleton(() => SearchArticles(repository: sl()));
-  sl.registerLazySingleton(() => SearchSources(sl(), repository: sl()));  // Fixed this line
+  // sl.registerLazySingleton(() => SearchSources( repository: sl()));
 
-  // Repository
+  sl.registerLazySingleton(() => SearchSources(sl(), repository: sl()));
+
   sl.registerLazySingleton<NewsRepository>(
     () => NewsRepositoryImpl(
       remoteDataSource: sl(),
@@ -57,7 +57,6 @@ Future<void> init() async {
     ),
   );
 
-  // Data sources
   sl.registerLazySingleton<NewsRemoteDataSource>(
     () => NewsRemoteDataSourceImpl(
       apiClient: sl(),
@@ -68,7 +67,6 @@ Future<void> init() async {
     () => NewsLocalDataSourceImpl(sharedPreferences: sl()),
   );
 
-  // Core
   sl.registerLazySingleton<ApiClient>(
     () => ApiClient(dio: sl()),
   );
@@ -76,7 +74,6 @@ Future<void> init() async {
     () => NetworkInfo(connectivity: sl()),
   );
 
-  // External
   sl.registerLazySingleton(() => Dio());
   sl.registerLazySingleton(() => Connectivity());
 }

@@ -24,7 +24,7 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Detail Berita")),
+      appBar: AppBar(title: const Text("News Detail")),
       body: WebViewWidget(controller: _controller),
     );
   }
