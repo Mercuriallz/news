@@ -8,11 +8,11 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   String currentSourceId = "";
 
   ArticleBloc({required this.getArticlesBySource}) : super(ArticleInitial()) {
-    on<LoadArticles>(_onLoadArticles);
-    on<LoadMoreArticles>(_onLoadMoreArticles);
+    on<LoadArticles>(onLoadArticles);
+    on<LoadMoreArticles>(onLoadMoreArticles);
   }
 
-  Future<void> _onLoadArticles(
+  Future<void> onLoadArticles(
     LoadArticles event,
     Emitter<ArticleState> emit,
   ) async {
@@ -31,7 +31,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     );
   }
 
-  Future<void> _onLoadMoreArticles(
+  Future<void> onLoadMoreArticles(
     LoadMoreArticles event,
     Emitter<ArticleState> emit,
   ) async {

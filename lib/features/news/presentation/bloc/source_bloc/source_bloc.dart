@@ -8,11 +8,11 @@ class SourceBloc extends Bloc<SourceEvent, SourceState> {
   String currentCategory = "";
 
   SourceBloc({required this.getSourcesByCategory}) : super(SourceInitial()) {
-    on<LoadSources>(_onLoadSources);
-    on<LoadMoreSources>(_onLoadMoreSources);
+    on<LoadSources>(onLoadSources);
+    on<LoadMoreSources>(onLoadMoreSources);
   }
 
-  Future<void> _onLoadSources(
+  Future<void> onLoadSources(
     LoadSources event,
     Emitter<SourceState> emit,
   ) async {
@@ -30,7 +30,7 @@ class SourceBloc extends Bloc<SourceEvent, SourceState> {
     );
   }
 
-  Future<void> _onLoadMoreSources(
+  Future<void> onLoadMoreSources(
     LoadMoreSources event,
     Emitter<SourceState> emit,
   ) async {

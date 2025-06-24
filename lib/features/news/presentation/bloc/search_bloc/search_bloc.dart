@@ -12,12 +12,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     required this.searchArticles,
     required this.searchSources,
   }) : super(SearchInitial()) {
-    on<SearchArticlesEvent>(_onSearchArticles);
-    on<SearchSourcesEvent>(_onSearchSources);
-    on<LoadMoreSearchArticles>(_onLoadMoreSearchArticles);
+    on<SearchArticlesEvent>(onSearchArticles);
+    on<SearchSourcesEvent>(onSearchSources);
+    on<LoadMoreSearchArticles>(onLoadMoreSearchArticles);
   }
 
-  Future<void> _onSearchArticles(
+  Future<void> onSearchArticles(
     SearchArticlesEvent event,
     Emitter<SearchState> emit,
   ) async {
@@ -37,7 +37,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     );
   }
 
-  Future<void> _onSearchSources(
+  Future<void> onSearchSources(
     SearchSourcesEvent event,
     Emitter<SearchState> emit,
   ) async {
@@ -54,7 +54,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     );
   }
 
-  Future<void> _onLoadMoreSearchArticles(
+  Future<void> onLoadMoreSearchArticles(
     LoadMoreSearchArticles event,
     Emitter<SearchState> emit,
   ) async {

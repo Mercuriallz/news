@@ -7,10 +7,10 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final GetCategories getCategories;
 
   CategoryBloc({required this.getCategories}) : super(CategoryInitial()) {
-    on<LoadCategories>(_onLoadCategories);
+    on<LoadCategories>(onLoadCategories);
   }
 
-  Future<void> _onLoadCategories(
+  Future<void> onLoadCategories(
     LoadCategories event,
     Emitter<CategoryState> emit,
   ) async {
