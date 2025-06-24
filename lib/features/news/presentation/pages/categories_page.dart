@@ -17,35 +17,35 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class _CategoriesPageState extends State<CategoriesPage> {
-  final TextEditingController _searchController = TextEditingController();
-  bool _isSearching = false;
-  List _allCategories = [];
-  List _filteredCategories = [];
+  final searchController = TextEditingController();
+  bool isSearching = false;
+  List allCategories = [];
+  List filteredCategories = [];
 
   @override
   void initState() {
     super.initState();
-    _searchController.addListener(_onSearchChanged);
+    searchController.addListener(onSearchChanged);
   }
 
   @override
   void dispose() {
-    _searchController.removeListener(_onSearchChanged);
-    _searchController.dispose();
+    searchController.removeListener(onSearchChanged);
+    searchController.dispose();
     super.dispose();
   }
 
-  void _onSearchChanged() {
-    if (_searchController.text.isEmpty) {
+  void onSearchChanged() {
+    if (searchController.text.isEmpty) {
       setState(() {
-        _filteredCategories = _allCategories;
+        filteredCategories = allCategories;
       });
     } else {
       setState(() {
-        _filteredCategories = _allCategories
+        filteredCategories = allCategories
             .where((category) => category.displayName
                 .toLowerCase()
-                .contains(_searchController.text.toLowerCase()))
+                .contains(searchController.text.toLowerCase()))
             .toList();
       });
     }
@@ -53,15 +53,15 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   void _startSearch() {
     setState(() {
-      _isSearching = true;
+      isSearching = true;
     });
   }
 
   void _stopSearch() {
     setState(() {
-      _isSearching = false;
-      _searchController.clear();
-      _filteredCategories = _allCategories;
+      isSearching = false;
+      searchController.clear();
+      filteredCategories = allCategories;
     });
   }
 
@@ -91,9 +91,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
           icon: Icon(Icons.menu, color: Colors.white),
           onPressed: () {},
         ),
-        title: _isSearching
+        title: isSearching
             ? TextField(
-                controller: _searchController,
+                controller: searchController,
                 autofocus: true,
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
@@ -114,10 +114,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
         actions: [
           IconButton(
             icon: Icon(
-              _isSearching ? Icons.close : Icons.search,
+              isSearching ? Icons.close : Icons.search,
               color: Colors.white,
             ),
-            onPressed: _isSearching ? _stopSearch : _startSearch,
+            onPressed: isSearching ? _stopSearch : _startSearch,
           ),
         ],
         centerTitle: true,
@@ -132,11 +132,11 @@ class _CategoriesPageState extends State<CategoriesPage> {
               return _buildErrorState(state.message);
             } else if (state is CategoryLoaded) {
               // Update categories data when loaded
-              if (_allCategories.isEmpty || _allCategories.length != state.categories.length) {
-                _allCategories = state.categories;
-                _filteredCategories = _allCategories;
+              if (allCategories.isEmpty || allCategories.length != state.categories.length) {
+                allCategories = state.categories;
+                filteredCategories = allCategories;
               }
-              return _buildCategoriesList(context, _filteredCategories);
+              return _buildCategoriesList(context, filteredCategories);
             }
             return Container();
           },
@@ -212,7 +212,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                _isSearching 
+                isSearching 
                     ? 'SEARCH RESULTS (${categories.length})'
                     : 'HIGHLIGHTS',
                 style: TextStyle(
@@ -222,7 +222,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   letterSpacing: 1.2,
                 ),
               ),
-              if (_isSearching && categories.isEmpty)
+              if (isSearching && categories.isEmpty)
                 Text(
                   'No categories found',
                   style: TextStyle(
@@ -234,7 +234,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           ),
         ),
         Expanded(
-          child: categories.isEmpty && _isSearching
+          child: categories.isEmpty && isSearching
               ? _buildEmptySearchState()
               : ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 24),

@@ -16,23 +16,23 @@ class ArticlesPage extends StatefulWidget {
 }
 
 class _ArticlesPageState extends State<ArticlesPage> {
-  final _scrollController = ScrollController();
+  final scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_onScroll);
+    scrollController.addListener(onScroll);
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
-  void _onScroll() {
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
+  void onScroll() {
+    if (scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent) {
       context.read<ArticleBloc>().add(LoadMoreArticles());
     }
   }
@@ -258,7 +258,7 @@ class _ArticlesPageState extends State<ArticlesPage> {
         ),
         Expanded(
           child: ListView.builder(
-            controller: _scrollController,
+            controller: scrollController,
             padding: EdgeInsets.symmetric(horizontal: 16),
             itemCount: state.hasReachedMax
                 ? state.articles.length
